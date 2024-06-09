@@ -13,6 +13,7 @@ const serverlessConfiguration: AWS = {
   plugins: [
     'serverless-plugin-typescript',
     '@mridang/serverless-checkov-plugin',
+    '@mridang/serverless-shortsha-plugin',
   ],
   package: {
     individually: false,
