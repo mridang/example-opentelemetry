@@ -46,6 +46,7 @@ const serverlessConfiguration: AWS = {
       DOMAIN_NAME: fullDomainName,
     },
     name: 'aws',
+    deploymentMethod: 'direct',
     logRetentionInDays: 14,
     tracing: {
       lambda: true,
