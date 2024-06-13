@@ -1,15 +1,14 @@
-import { Controller, Get, Logger } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import {
   HealthCheck,
   HealthCheckService,
   HttpHealthIndicator,
 } from '@nestjs/terminus';
 import { ServerTiming } from './misc/timing.decorator';
+import { getCurrentInvoke } from '@codegenie/serverless-express';
 
 @Controller()
 export class AppController {
-  private readonly logger = new Logger(AppController.name);
-
   constructor(
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
@@ -19,8 +18,9 @@ export class AppController {
 
   @Get('debug')
   debug() {
-    this.logger.log('This is a sample log message');
-    return 'Ok';
+    return {
+      ...getCurrentInvoke(),
+    };
   }
 
   @Get('goboom')
