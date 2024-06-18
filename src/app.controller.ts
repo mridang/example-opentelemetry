@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Logger } from '@nestjs/common';
 import {
   HealthCheck,
   HealthCheckService,
@@ -9,11 +9,18 @@ import { getCurrentInvoke } from '@codegenie/serverless-express';
 
 @Controller()
 export class AppController {
+  private readonly logger = new Logger(AppController.name);
   constructor(
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
   ) {
     //
+  }
+
+  @Get('logme')
+  logMe() {
+    this.logger.log('this is a test message');
+    return 'ok';
   }
 
   @Get('debug')
