@@ -17,6 +17,7 @@
     "cypress:run": "cypress run --browser chrome"
   },
   "dependencies": {
+    "@amplication/opentelemetry-nestjs": "^5.0.3",
     "@aws-lambda-powertools/logger": "^1.18.1",
     "@aws-sdk/client-secrets-manager": "^3.511.0",
     "@codegenie/serverless-express": "^4.3.0",
@@ -29,6 +30,9 @@
     "@nestjs/serve-static": "^4.0.1",
     "@nestjs/terminus": "^10.2.3",
     "@ntegral/nestjs-sentry": "^4.0.1",
+    "@opentelemetry/exporter-logs-otlp-http": "^0.48.0",
+    "@opentelemetry/id-generator-aws-xray": "^1.2.2",
+    "@opentelemetry/propagator-aws-xray": "^1.25.0",
     "@sentry/node": "^7.106.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
@@ -46,6 +50,11 @@
     "url": "https://github.com/mridang/test-logcls"
   },
   "overrides": {
+    "@opentelemetry/core": "1.21.0",
+    "@opentelemetry/resources": "1.21.0",
+    "@opentelemetry/sdk-trace-base": "1.21.0",
+    "@opentelemetry/context-async-hooks": "1.21.0",
+    "@opentelemetry/auto-instrumentations-node": "0.47.1",
     "eslint-config-standard-with-typescript": {
       "@typescript-eslint/eslint-plugin": "^7.0.0"
     },

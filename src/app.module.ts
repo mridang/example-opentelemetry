@@ -15,10 +15,12 @@ import { ClsModule } from 'nestjs-cls';
 import { PowertoolsLoggerService } from './app.logger';
 import { TimingInterceptor } from './timing.interceptor';
 import { ExceptionInterceptor } from './exception.interceptor';
+import { OpenTelemetryModule } from '@amplication/opentelemetry-nestjs';
 
 @Global()
 @Module({
   imports: [
+    OpenTelemetryModule.forRoot(),
     ClsModule.forRoot({
       global: true,
     }),
