@@ -5,6 +5,11 @@ import { secretName } from './src/constants';
 
 const parentDomain = process.env.PARENT_DOMAIN;
 const hostedZoneId = process.env.HOSTED_ZONE_ID;
+
+if (parentDomain === undefined || hostedZoneId === undefined) {
+  throw new Error('Environment variables not specified');
+}
+
 const fullDomainName = `${packageJson.name}.${parentDomain}`;
 
 const serverlessConfiguration: AWS = {

@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Logger } from '@nestjs/common';
 import {
   HealthCheck,
   HealthCheckService,
@@ -10,11 +10,30 @@ import axios from 'axios';
 
 @Controller()
 export class AppController {
+  private readonly logger = new Logger(AppController.name);
   constructor(
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
   ) {
     //
+  }
+
+  @Get('logme')
+  logMe() {
+    this.logger.log('this is a test message');
+    this.logger.log('this is a test message', 'foo');
+    this.logger.log('this is a test message', 'foo', { baz: 'bar' });
+    return 'ok';
+  }
+
+  @Get('goboom')
+  goBoom() {
+    try {
+      throw new Error('boom');
+    } catch (err) {
+      this.logger.error('this is a test message', err);
+      throw err;
+    }
   }
 
   @Get('debug')

@@ -12,10 +12,10 @@ import { secretName } from './constants';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RequestIdMiddleware } from './correlation.middleware';
 import { ClsModule } from 'nestjs-cls';
-import { PowertoolsLoggerService } from './app.logger';
 import { TimingInterceptor } from './timing.interceptor';
 import { ExceptionInterceptor } from './exception.interceptor';
 import { OpenTelemetryModule } from '@amplication/opentelemetry-nestjs';
+import { BetterLogger } from './logger';
 
 @Global()
 @Module({
@@ -62,7 +62,7 @@ import { OpenTelemetryModule } from '@amplication/opentelemetry-nestjs';
   ],
   controllers: [AppController],
   providers: [
-    PowertoolsLoggerService,
+    BetterLogger,
     {
       provide: 'ENV_PATH',
       useValue: process.env.ENV_PATH || path.resolve(process.cwd(), '.env'),
