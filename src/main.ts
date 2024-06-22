@@ -1,41 +1,40 @@
 import * as packageJson from '../package.json';
-import { Tracing } from '@amplication/opentelemetry-nestjs';
+//import { ConsoleSpanExporter } from '@opentelemetry/sdk-trace-node';
+import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
+// import {
+//   ConsoleMetricExporter,
+//   PeriodicExportingMetricReader,
+// } from '@opentelemetry/sdk-metrics';
 import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
-
-import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
+import {
+  ConsoleLogRecordExporter,
+  SimpleLogRecordProcessor,
+} from '@opentelemetry/sdk-logs';
+import { Tracing } from '@amplication/opentelemetry-nestjs';
 import { AWSXRayPropagator } from '@opentelemetry/propagator-aws-xray';
 import { AWSXRayIdGenerator } from '@opentelemetry/id-generator-aws-xray';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
-import { SimpleLogRecordProcessor } from '@opentelemetry/sdk-logs/build/src/export/SimpleLogRecordProcessor';
-import { MultiLogRecordProcessor } from '@opentelemetry/sdk-logs/build/src/MultiLogRecordProcessor';
-import { ConsoleLogRecordExporter } from '@opentelemetry/sdk-logs/build/src/export/ConsoleLogRecordExporter';
-import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http';
-
-diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
 
 Tracing.init({
   serviceName: packageJson.name,
   idGenerator: new AWSXRayIdGenerator(),
   textMapPropagator: new AWSXRayPropagator(),
-  logRecordProcessor: new MultiLogRecordProcessor(
-    [
-      new SimpleLogRecordProcessor(new ConsoleLogRecordExporter()),
-      new SimpleLogRecordProcessor(
-        new OTLPLogExporter({
-          url: 'http://localhost:4317',
-        }),
-      ),
-    ],
-    0,
+  // metricReader: new PeriodicExportingMetricReader({
+  //   exporter: new ConsoleMetricExporter(),
+  // }),
+  logRecordProcessor: new SimpleLogRecordProcessor(
+    new ConsoleLogRecordExporter(),
   ),
-  //spanProcessor: new SimpleSpanProcessor(new ConsoleSpanExporter()),
+  instrumentations: [getNodeAutoInstrumentations()],
+  //spanProcessor: new SimpleSpanProcessor(new ConsoleSpanExporter()), //new SimpleSpanProcessor(new OTLPTraceExporter({ url: 'http://localhost:4317' }))
   spanProcessor: new SimpleSpanProcessor(
-    new OTLPTraceExporter({
-      url: 'http://localhost:4317',
-    }),
+    new OTLPTraceExporter({ url: 'http://localhost:4317' }),
   ),
 });
 
+import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
+
+diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
