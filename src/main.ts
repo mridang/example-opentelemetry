@@ -26,7 +26,7 @@ Tracing.init({
     new ConsoleLogRecordExporter(),
   ),
   instrumentations: [getNodeAutoInstrumentations()],
-  //spanProcessor: new SimpleSpanProcessor(new ConsoleSpanExporter()), //new SimpleSpanProcessor(new OTLPTraceExporter({ url: 'http://localhost:4317' }))
+  //spanProcessor: new SimpleSpanProcessor(new ConsoleSpanExporter()),
   spanProcessor: new SimpleSpanProcessor(
     new OTLPTraceExporter({ url: 'http://localhost:4317' }),
   ),
