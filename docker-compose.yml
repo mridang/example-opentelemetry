@@ -35,4 +35,4 @@ services:
             - "13133:13133"
         volumes:
             - ./etc/collector.yml:/etc/otel/config.yml                              # Volume mount for custom OpenTelemetry Collector configuration
-        command: ["--config=/etc/otel/config.yml"]                                  # Command to run the OpenTelemetry Collector with the specified configuration
+        command: ["--config=/etc/otel/config.yml", "--feature-gates=+component.UseLocalHostAsDefaultHost"]                                  # Command to run the OpenTelemetry Collector with the specified configuration

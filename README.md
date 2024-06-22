@@ -3,10 +3,10 @@ Notes:
 Even after installing the OTEL libraries, you must explicitly install
 these packages
 
-* The [`https://www.npmjs.com/package/@opentelemetry/id-generator-aws-xray`](https://www.npmjs.com/package/@opentelemetry/id-generator-aws-xray)
-package so that the IDs are compliant.
-* The [`@opentelemetry/propagator-aws-xray](https://www.npmjs.com/package/@opentelemetry/propagator-aws-xray)
-library which I'm unusre about.
+- The [`https://www.npmjs.com/package/@opentelemetry/id-generator-aws-xray`](https://www.npmjs.com/package/@opentelemetry/id-generator-aws-xray)
+  package so that the IDs are compliant.
+- The [`@opentelemetry/propagator-aws-xray](https://www.npmjs.com/package/@opentelemetry/propagator-aws-xray)
+  library which I'm unusre about.
 
 These libraries do not need to be installed `@opentelemetry/instrumentation-aws-sdk`
 as these are bundled.
@@ -20,9 +20,10 @@ and that's why the `AWSXRayIdGenerator` is used.
 > a trace ID includes:
 >
 > **Trace ID Format**
-> * The version number, for instance, 1.
-> * The time of the original request, in Unix epoch time, in 8 hexadecimal digits. For example, 10:00AM December 2nd, 2016 PST in epoch time is 1480615200 seconds, or 58406520 in hexadecimal.
-> * A 96-bit identifier for the trace, globally unique, in 24 hexadecimal digits.
+>
+> - The version number, for instance, 1.
+> - The time of the original request, in Unix epoch time, in 8 hexadecimal digits. For example, 10:00AM December 2nd, 2016 PST in epoch time is 1480615200 seconds, or 58406520 in hexadecimal.
+> - A 96-bit identifier for the trace, globally unique, in 24 hexadecimal digits.
 >
 > > Note
 > > Trace IDs created via OpenTelemetry have a different format based on the W3C Trace Context specification. A W3C trace ID must be formatted in the X-Ray trace ID format when sending to X-Ray. For example, a W3C trace ID 4efaaf4d1e8720b39541901950019ee5 should be formatted as 1-4efaaf4d-1e8720b39541901950019ee5 when sending to X-Ray. While X-Ray trace IDs include the original request timestamp in Unix epoch time, this is not required or validated.
@@ -36,7 +37,6 @@ do with the fact the there is an internal spec that denotes what
 the trace ids must be like.
 
 The
-
 
 https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/exporter/awsxrayexporter/internal/translator/segment.go#L556-L595
 
@@ -55,30 +55,29 @@ south in production.
 
 ```json
 {
-  traceId: '5dd13a5cdbdc68ad4ae0d19987e62a2d',
-  parentId: 'd9614628c1a9373e',
-  traceState: undefined,
-  name: 'GET undefined',
-  id: '2adce4642e15ed8a',
-  kind: 2,
-  timestamp: 1718440606727000,
-  duration: 912998.792,
-  attributes: {
-    'http.url': 'https://jsonplaceholder.typicode.com/posts/1',
-    'http.method': 'GET',
-    'http.target': '/posts/1',
-    'net.peer.name': 'jsonplaceholder.typicode.com',
-    'http.host': 'jsonplaceholder.typicode.com:443',
-    'net.peer.ip': '104.21.59.19',
-    'net.peer.port': 443,
-    'http.status_code': 200,
-    'http.status_text': 'OK',
-    'http.flavor': '1.1',
-    'net.transport': 'ip_tcp'
+  "traceId": "5dd13a5cdbdc68ad4ae0d19987e62a2d",
+  "parentId": "d9614628c1a9373e",
+  "traceState": undefined,
+  "name": "GET undefined",
+  "id": "2adce4642e15ed8a",
+  "kind": 2,
+  "timestamp": 1718440606727000,
+  "duration": 912998.792,
+  "attributes": {
+    "http.url": "https://jsonplaceholder.typicode.com/posts/1",
+    "http.method": "GET",
+    "http.target": "/posts/1",
+    "net.peer.name": "jsonplaceholder.typicode.com",
+    "http.host": "jsonplaceholder.typicode.com:443",
+    "net.peer.ip": "104.21.59.19",
+    "net.peer.port": 443,
+    "http.status_code": 200,
+    "http.status_text": "OK",
+    "http.flavor": "1.1",
+    "net.transport": "ip_tcp"
   },
-  status: { code: 0 },
-  events: [],
-  links: []
+  "status": { "code": 0 },
+  "events": [],
+  "links": []
 }
-
 ```

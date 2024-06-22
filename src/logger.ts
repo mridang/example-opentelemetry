@@ -4,6 +4,7 @@ import { ClsService } from 'nestjs-cls';
 import { ProcessEnv } from 'npm-run-path';
 import { isString } from '@nestjs/common/utils/shared.utils';
 import { isLogLevelEnabled } from '@nestjs/common/services/utils';
+import { OpenTelemetryTransportV3 } from '@opentelemetry/winston-transport';
 
 @Injectable()
 export class BetterLogger implements LoggerService {
@@ -51,7 +52,7 @@ export class BetterLogger implements LoggerService {
         aws_region: envVars.AWS_REGION,
         env_name: envVars.NODE_ENV,
       },
-      transports: [new transports.Console()],
+      transports: [new transports.Console(), new OpenTelemetryTransportV3()],
     });
   }
 

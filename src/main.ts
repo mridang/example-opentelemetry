@@ -1,10 +1,9 @@
 import * as packageJson from '../package.json';
-//import { ConsoleSpanExporter } from '@opentelemetry/sdk-trace-node';
-import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
-// import {
-//   ConsoleMetricExporter,
-//   PeriodicExportingMetricReader,
-// } from '@opentelemetry/sdk-metrics';
+import { ConsoleSpanExporter } from '@opentelemetry/sdk-trace-node';
+import {
+  ConsoleMetricExporter,
+  PeriodicExportingMetricReader,
+} from '@opentelemetry/sdk-metrics';
 import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import {
   ConsoleLogRecordExporter,
@@ -14,27 +13,30 @@ import { Tracing } from '@amplication/opentelemetry-nestjs';
 import { AWSXRayPropagator } from '@opentelemetry/propagator-aws-xray';
 import { AWSXRayIdGenerator } from '@opentelemetry/id-generator-aws-xray';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
+import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-grpc';
 
 Tracing.init({
   serviceName: packageJson.name,
   idGenerator: new AWSXRayIdGenerator(),
   textMapPropagator: new AWSXRayPropagator(),
-  // metricReader: new PeriodicExportingMetricReader({
-  //   exporter: new ConsoleMetricExporter(),
-  // }),
+  metricReader: new PeriodicExportingMetricReader({
+    exporter: new ConsoleMetricExporter(),
+  }),
   logRecordProcessor: new SimpleLogRecordProcessor(
-    new ConsoleLogRecordExporter(),
+    process.env.DEBUG
+      ? new ConsoleLogRecordExporter()
+      : new OTLPLogExporter({ url: 'http://localhost:4317' }),
   ),
-  instrumentations: [getNodeAutoInstrumentations()],
-  //spanProcessor: new SimpleSpanProcessor(new ConsoleSpanExporter()),
   spanProcessor: new SimpleSpanProcessor(
-    new OTLPTraceExporter({ url: 'http://localhost:4317' }),
+    process.env.DEBUG
+      ? new ConsoleSpanExporter()
+      : new OTLPTraceExporter({ url: 'http://localhost:4317' }),
   ),
 });
 
 import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
-
 diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
