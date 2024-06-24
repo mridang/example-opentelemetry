@@ -73,7 +73,7 @@
 		"@types/jest": "^29.5.11",
 		"@types/node": "^20.3.2",
 		"@types/supertest": "^6.0.2",
-		"@typescript-eslint/eslint-plugin": "^7.0.2",
+		"@typescript-eslint/eslint-plugin": "^7.13.1",
 		"@typescript-eslint/parser": "^7.0.2",
 		"@typescript-eslint/typescript-estree": "^7.0.0",
 		"cypress": "^13.6.6",
