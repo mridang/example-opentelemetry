@@ -11,16 +11,21 @@ export class RequestIdMiddleware implements NestMiddleware {
   private isColdStart = true;
   private readonly uaCache = new Map<string, UAParser.IResult>();
 
-  constructor(private readonly cls: ClsService) {
+  constructor(
+    private readonly clsService: ClsService,
+    private readonly currentInvoke: () => Context = () => {
+      return getCurrentInvoke().context as Context;
+    },
+  ) {
     //
   }
 
   use(
-    req: Request & { _parsedUrl: { query: string } },
+    req: Request & { _parsedUrl?: { query: string } },
     _res: Response,
     next: NextFunction,
   ) {
-    const context = getCurrentInvoke().context as Context;
+    const context = this.currentInvoke();
 
     const userAgentString = req?.headers['user-agent'] || '';
     let uaResult: UAParser.IResult;
@@ -32,8 +37,8 @@ export class RequestIdMiddleware implements NestMiddleware {
       this.uaCache.set(userAgentString, uaResult);
     }
 
-    this.cls.run(() => {
-      this.cls.set('ctx', {
+    this.clsService.run(() => {
+      this.clsService.set('ctx', {
         url: {
           domain: req.hostname,
           extension: path.extname(req.path) || undefined,
@@ -42,7 +47,7 @@ export class RequestIdMiddleware implements NestMiddleware {
           original: req?.originalUrl,
           path: req.path,
           port: req.socket.localPort,
-          query: req._parsedUrl.query,
+          query: req._parsedUrl?.query,
           scheme: req.protocol,
           username: undefined,
           password: undefined,
