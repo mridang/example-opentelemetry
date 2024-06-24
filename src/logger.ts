@@ -22,6 +22,7 @@ export class BetterLogger implements LoggerService {
     ],
     @Optional()
     private readonly envVars = process.env,
+    @Optional()
     private readonly nodeOs: {
       type(): string;
       arch(): string;
