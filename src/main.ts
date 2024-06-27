@@ -19,7 +19,6 @@ Tracing.init({
   serviceName: packageJson.name,
   idGenerator: new AWSXRayIdGenerator(),
   textMapPropagator: new AWSXRayPropagator(),
-  // @ts-expect-error sine
   metricReader: new PeriodicExportingMetricReader({
     exporter: new ConsoleMetricExporter(),
   }),
