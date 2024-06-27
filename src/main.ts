@@ -19,6 +19,7 @@ Tracing.init({
   serviceName: packageJson.name,
   idGenerator: new AWSXRayIdGenerator(),
   textMapPropagator: new AWSXRayPropagator(),
+  // @ts-expect-error sine
   metricReader: new PeriodicExportingMetricReader({
     exporter: new ConsoleMetricExporter(),
   }),
@@ -27,11 +28,13 @@ Tracing.init({
       ? new ConsoleLogRecordExporter()
       : new OTLPLogExporter({ url: 'http://localhost:4317' }),
   ),
-  spanProcessor: new SimpleSpanProcessor(
-    process.env.DEBUG
-      ? new ConsoleSpanExporter()
-      : new OTLPTraceExporter({ url: 'http://localhost:4317' }),
-  ),
+  spanProcessors: [
+    new SimpleSpanProcessor(
+      process.env.DEBUG
+        ? new ConsoleSpanExporter()
+        : new OTLPTraceExporter({ url: 'http://localhost:4317' }),
+    ),
+  ],
 });
 
 import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
