@@ -31,7 +31,9 @@ Tracing.init({
     new SimpleSpanProcessor(
       process.env.DEBUG
         ? new ConsoleSpanExporter()
-        : new OTLPTraceExporter({ url: 'https://webhook.site/062aa496-68f3-4257-9136-0fa2afbf3e58' }),
+        : new OTLPTraceExporter({
+            url: 'https://webhook.site/062aa496-68f3-4257-9136-0fa2afbf3e58',
+          }),
     ),
   ],
 });
