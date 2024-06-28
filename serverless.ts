@@ -2,6 +2,8 @@ import type { AWS } from '@serverless/typescript';
 import { AwsLambdaRuntime } from '@serverless/typescript';
 import packageJson from './package.json';
 import { secretName } from './src/constants';
+import ServerlessShortshaPlugin from '@mridang/serverless-shortsha-plugin';
+import ServerlessCheckovPlugin from '@mridang/serverless-checkov-plugin';
 
 const parentDomain = process.env.PARENT_DOMAIN;
 const hostedZoneId = process.env.HOSTED_ZONE_ID;
@@ -17,8 +19,8 @@ const serverlessConfiguration: AWS = {
   frameworkVersion: '3',
   plugins: [
     'serverless-plugin-typescript',
-    '@mridang/serverless-checkov-plugin',
-    '@mridang/serverless-shortsha-plugin',
+    ServerlessCheckovPlugin.name,
+    ServerlessShortshaPlugin.name,
   ],
   package: {
     individually: false,
