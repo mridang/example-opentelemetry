@@ -7,10 +7,13 @@ import {
 import { ServerTiming } from './misc/timing.decorator';
 import { getCurrentInvoke } from '@codegenie/serverless-express';
 import axios from 'axios';
+import { S3Client, ListBucketsCommand } from '@aws-sdk/client-s3';
 
 @Controller()
 export class AppController {
   private readonly logger = new Logger(AppController.name);
+  private readonly s3Client = new S3Client();
+
   constructor(
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
@@ -49,6 +52,15 @@ export class AppController {
     return {
       ...getCurrentInvoke(),
     };
+  }
+
+  @Get('listbuckets')
+  async listBuckets() {
+    return await this.s3Client
+      .send(new ListBucketsCommand({}))
+      .then((result) => {
+        result.Buckets?.map((bucket) => bucket.Name);
+      });
   }
 
   @Get('goboom')

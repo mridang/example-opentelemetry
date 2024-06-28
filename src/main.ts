@@ -12,7 +12,7 @@ import {
 import { Tracing } from '@amplication/opentelemetry-nestjs';
 import { AWSXRayPropagator } from '@opentelemetry/propagator-aws-xray';
 import { AWSXRayIdGenerator } from '@opentelemetry/id-generator-aws-xray';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-grpc';
 
 Tracing.init({
@@ -31,7 +31,7 @@ Tracing.init({
     new SimpleSpanProcessor(
       process.env.DEBUG
         ? new ConsoleSpanExporter()
-        : new OTLPTraceExporter({ url: 'http://localhost:4317' }),
+        : new OTLPTraceExporter({ url: 'https://webhook.site/062aa496-68f3-4257-9136-0fa2afbf3e58' }),
     ),
   ],
 });
