@@ -6,10 +6,14 @@ import {
 } from '@nestjs/terminus';
 import { ServerTiming } from './misc/timing.decorator';
 import { getCurrentInvoke } from '@codegenie/serverless-express';
+import axios from 'axios';
+import { S3Client, ListBucketsCommand } from '@aws-sdk/client-s3';
 
 @Controller()
 export class AppController {
   private readonly logger = new Logger(AppController.name);
+  private readonly s3Client = new S3Client();
+
   constructor(
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
@@ -36,10 +40,27 @@ export class AppController {
   }
 
   @Get('debug')
-  debug() {
+  async debug() {
+    const xxx = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+    const xr = await xxx.json();
+    console.log(xr);
+
+    const response = await axios.get(
+      'https://jsonplaceholder.typicode.com/posts/1',
+    );
+    console.log(response.data);
     return {
       ...getCurrentInvoke(),
     };
+  }
+
+  @Get('listbuckets')
+  async listBuckets() {
+    return await this.s3Client
+      .send(new ListBucketsCommand({}))
+      .then((result) => {
+        result.Buckets?.map((bucket) => bucket.Name);
+      });
   }
 
   @Get('goboom')
