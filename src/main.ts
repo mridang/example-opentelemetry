@@ -12,8 +12,8 @@ import {
 import { Tracing } from '@amplication/opentelemetry-nestjs';
 import { AWSXRayPropagator } from '@opentelemetry/propagator-aws-xray';
 import { AWSXRayIdGenerator } from '@opentelemetry/id-generator-aws-xray';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-grpc';
+import { XraySpanExporter } from '@mridang/exporter-xray';
 
 Tracing.init({
   serviceName: packageJson.name,
@@ -29,11 +29,10 @@ Tracing.init({
   ),
   spanProcessors: [
     new SimpleSpanProcessor(
-      process.env.DEBUG
-        ? new ConsoleSpanExporter()
-        : new OTLPTraceExporter({
-            url: 'https://webhook.site/062aa496-68f3-4257-9136-0fa2afbf3e58',
-          }),
+      process.env.DEBUG ? new ConsoleSpanExporter() : new XraySpanExporter(),
+      // new OTLPTraceExporter({
+      //   url: 'https://webhook.site/062aa496-68f3-4257-9136-0fa2afbf3e58',
+      // }),
     ),
   ],
 });
