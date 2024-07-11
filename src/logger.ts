@@ -8,7 +8,7 @@ import os from 'node:os';
 
 @Injectable()
 export class BetterLogger implements LoggerService {
-  private logger: winston.Logger;
+  private readonly logger: winston.Logger;
 
   constructor(
     private readonly clsService: ClsService,
@@ -115,7 +115,9 @@ export class BetterLogger implements LoggerService {
           target: undefined,
         },
       }),
-      transports: [new transports.Console(), new OpenTelemetryTransportV3()],
+      transports: !process.env.OLTP_ENDPOINT
+        ? [new OpenTelemetryTransportV3()]
+        : [new transports.Console()],
     });
   }
 

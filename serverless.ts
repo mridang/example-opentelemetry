@@ -45,7 +45,7 @@ const serverlessConfiguration: AWS = {
       'sls:meta:environment': '${opt:stage, "dev"}',
     },
     environment: {
-      NODE_OPTIONS: '--enable-source-maps',
+      NODE_OPTIONS: '--require=./src/otel --enable-source-maps',
       ACCOUNT_ID: '${aws:accountId}',
       NODE_ENV: '${self:provider.stage}',
       DOMAIN_NAME: fullDomainName,
@@ -66,7 +66,7 @@ const serverlessConfiguration: AWS = {
     },
     runtime: `nodejs${packageJson.engines.node}` as AwsLambdaRuntime,
     architecture: 'arm64',
-    memorySize: 256,
+    memorySize: 512,
     iam: {
       role: {
         statements: [

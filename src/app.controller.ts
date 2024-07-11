@@ -50,6 +50,9 @@ export class AppController {
     );
     console.log(response.data);
     return {
+      envvar: {
+        ...process.env,
+      },
       ...getCurrentInvoke(),
     };
   }
