@@ -78,7 +78,7 @@ export class RequestIdMiddleware implements NestMiddleware {
           request: {
             body: undefined,
             bytes: req.headers['content-length'],
-            id: req.headers['x-amz-cf-id'],
+            id: context?.awsRequestId,
             method: req.method,
             mime_type: req.headers['content-type'],
             referrer: req.headers['referer'],
