@@ -83,7 +83,8 @@
 			"@sentry/node": "7.106.0"
 		},
 		"axios": "1.6.7",
-		"ip": "2.0.1"
+		"ip": "2.0.1",
+		"@smithy/util-utf8": "3.0.0"
 	},
 	"peerDependencies": {
 		"@aws-sdk/client-xray": "^3.511.0"
