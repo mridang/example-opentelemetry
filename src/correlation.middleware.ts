@@ -40,7 +40,7 @@ export class RequestIdMiddleware implements NestMiddleware {
 
     this.clsService.run(() => {
       this.clsService.set('ctx', {
-        ['@requestId:']: context?.awsRequestId,
+        ['@requestId']: context?.awsRequestId,
         url: {
           domain: req.hostname,
           extension: path.extname(req.path) || undefined,
