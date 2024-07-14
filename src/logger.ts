@@ -115,7 +115,7 @@ export class BetterLogger implements LoggerService {
           target: undefined,
         },
       }),
-      transports: !process.env.OLTP_ENDPOINT
+      transports: process.env.OLTP_ENDPOINT
         ? [new OpenTelemetryTransportV3()]
         : [new transports.Console()],
     });
