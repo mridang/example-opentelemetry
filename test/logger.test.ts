@@ -2,7 +2,7 @@ import { expect } from '@jest/globals';
 import { BetterLogger } from '../src/logger';
 import { ClsService } from 'nestjs-cls';
 
-describe('CustomLoggerService', () => {
+describe('logger.setup test', () => {
   let betterLogger: BetterLogger;
 
   const sampleError = new Error('something went wrong');
