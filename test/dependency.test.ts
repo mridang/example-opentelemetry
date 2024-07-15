@@ -115,16 +115,12 @@ describe('duplicate.dependencies test', () => {
   test.each(['@aws-sdk', '@smithy', '@sentry', '@opentelemetry'])(
     'should not have duplicate %s dependencies',
     (dependencyPrefix) => {
-      const duplicateDeps = Object.keys(duplicates).filter((dep) =>
-        dep.startsWith(dependencyPrefix),
-      );
-      try {
-        expect(duplicateDeps.length).toBe(0);
-      } catch {
-        throw new Error(
-          `Found duplicate versions for ${duplicateDeps.join(', ')}`,
-        );
-      }
+        const duplicateDeps = Object.keys(duplicates).filter(dep => dep.startsWith(dependencyPrefix));
+        try {
+          expect(duplicateDeps.length).toBe(0);
+        } catch {
+          throw new Error(`Found duplicate versions for ${duplicateDeps.join(', ')}`);
+        }
     },
   );
 });
