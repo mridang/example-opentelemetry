@@ -66,8 +66,8 @@ export class AppController {
       });
   }
 
-  @Get('goboom')
-  goboom() {
+  @Get('crash')
+  crash() {
     throw new Error('Oh no!');
   }
 
