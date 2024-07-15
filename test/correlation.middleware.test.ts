@@ -51,6 +51,7 @@ describe('correlation.middleware test', () => {
     expect(nextFn).toHaveBeenCalled();
     expect(mockClsService.run).toHaveBeenCalled();
     expect(mockClsService.set).toHaveBeenCalledWith('ctx', {
+      '@requestId': 'test-request-id',
       url: {
         domain: 'example.com',
         extension: undefined,
@@ -90,7 +91,7 @@ describe('correlation.middleware test', () => {
         request: {
           body: undefined,
           bytes: '1024',
-          id: 'test-cf-id',
+          id: 'test-request-id',
           method: 'GET', // Add expected method here
           mime_type: 'application/json',
           referrer: 'https://example.com',
