@@ -21,6 +21,11 @@ export class AppController {
     //
   }
 
+  @Get('ctx')
+  ctx() {
+    return JSON.stringify(getCurrentInvoke());
+  }
+
   @Get('logme')
   logMe() {
     this.logger.log('this is a test message');
