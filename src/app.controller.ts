@@ -29,9 +29,6 @@ export class AppController {
   @Get('logme')
   logMe() {
     this.logger.log('this is a test message');
-    this.logger.log('this is a test message', 'foo');
-    this.logger.log('this is a test message', 'foo', { baz: 'bar' });
-    return 'ok';
   }
 
   @Get('goboom')
@@ -44,22 +41,20 @@ export class AppController {
     }
   }
 
-  @Get('debug')
-  async debug() {
-    const xxx = await fetch('https://jsonplaceholder.typicode.com/todos/1');
-    const xr = await xxx.json();
-    console.log(xr);
-
+  @Get('axios')
+  async axios() {
     const response = await axios.get(
       'https://jsonplaceholder.typicode.com/posts/1',
     );
-    console.log(response.data);
-    return {
-      envvar: {
-        ...process.env,
-      },
-      ...getCurrentInvoke(),
-    };
+    return response.data;
+  }
+
+  @Get('fetch')
+  async fetch() {
+    const response = await fetch(
+      'https://jsonplaceholder.typicode.com/todos/1',
+    );
+    return await response.json();
   }
 
   @Get('listbuckets')
