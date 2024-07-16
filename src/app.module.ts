@@ -14,11 +14,13 @@ import { RequestIdMiddleware } from './correlation.middleware';
 import { ClsModule } from 'nestjs-cls';
 import { TimingInterceptor } from './timing.interceptor';
 import { ExceptionInterceptor } from './exception.interceptor';
+import { OpenTelemetryModule } from '@amplication/opentelemetry-nestjs';
 import { BetterLogger } from './logger';
 
 @Global()
 @Module({
   imports: [
+    OpenTelemetryModule.forRoot(),
     ClsModule.forRoot({
       global: true,
     }),

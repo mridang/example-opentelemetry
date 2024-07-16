@@ -2,12 +2,13 @@ import { Injectable, LoggerService, LogLevel, Optional } from '@nestjs/common';
 import winston, { createLogger, format, transports } from 'winston';
 import { ClsService } from 'nestjs-cls';
 import { isLogLevelEnabled } from '@nestjs/common/services/utils';
+import { OpenTelemetryTransportV3 } from '@opentelemetry/winston-transport';
 import { flatten } from 'safe-flat';
 import os from 'node:os';
 
 @Injectable()
 export class BetterLogger implements LoggerService {
-  private logger: winston.Logger;
+  private readonly logger: winston.Logger;
 
   constructor(
     private readonly clsService: ClsService,
@@ -114,7 +115,9 @@ export class BetterLogger implements LoggerService {
           target: undefined,
         },
       }),
-      transports: [new transports.Console()],
+      transports: process.env.OLTP_ENDPOINT
+        ? [new OpenTelemetryTransportV3()]
+        : [new transports.Console()],
     });
   }
 

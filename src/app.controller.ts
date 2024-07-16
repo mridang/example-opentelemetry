@@ -6,10 +6,14 @@ import {
 } from '@nestjs/terminus';
 import { ServerTiming } from './misc/timing.decorator';
 import { getCurrentInvoke } from '@codegenie/serverless-express';
+import axios from 'axios';
+import { S3Client, ListBucketsCommand } from '@aws-sdk/client-s3';
 
 @Controller()
 export class AppController {
   private readonly logger = new Logger(AppController.name);
+  private readonly s3Client = new S3Client();
+
   constructor(
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
@@ -17,12 +21,14 @@ export class AppController {
     //
   }
 
+  @Get('ctx')
+  ctx() {
+    return JSON.stringify(getCurrentInvoke());
+  }
+
   @Get('logme')
   logMe() {
     this.logger.log('this is a test message');
-    this.logger.log('this is a test message', 'foo');
-    this.logger.log('this is a test message', 'foo', { baz: 'bar' });
-    return 'ok';
   }
 
   @Get('goboom')
@@ -35,15 +41,33 @@ export class AppController {
     }
   }
 
-  @Get('debug')
-  debug() {
-    return {
-      ...getCurrentInvoke(),
-    };
+  @Get('axios')
+  async axios() {
+    const response = await axios.get(
+      'https://jsonplaceholder.typicode.com/posts/1',
+    );
+    return response.data;
   }
 
-  @Get('goboom')
-  goboom() {
+  @Get('fetch')
+  async fetch() {
+    const response = await fetch(
+      'https://jsonplaceholder.typicode.com/todos/1',
+    );
+    return await response.json();
+  }
+
+  @Get('listbuckets')
+  async listBuckets() {
+    return await this.s3Client
+      .send(new ListBucketsCommand({}))
+      .then((result) => {
+        result.Buckets?.map((bucket) => bucket.Name);
+      });
+  }
+
+  @Get('crash')
+  crash() {
     throw new Error('Oh no!');
   }
 
