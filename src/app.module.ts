@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import path, { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { TerminusModule } from '@nestjs/terminus';
 import { HttpModule } from '@nestjs/axios';
 import { SentryModule } from '@ntegral/nestjs-sentry';
 import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
@@ -23,7 +22,6 @@ import { BetterLogger } from './logger';
       global: true,
     }),
     HttpModule,
-    TerminusModule,
     SentryModule.forRootAsync({
       useFactory: async (secretsManagerClient: SecretsManagerClient) => {
         if (process.env.SENTRY_DSN) {

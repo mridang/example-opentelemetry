@@ -1,21 +1,10 @@
 import { Controller, Get, Logger } from '@nestjs/common';
-import {
-  HealthCheck,
-  HealthCheckService,
-  HttpHealthIndicator,
-} from '@nestjs/terminus';
 import { ServerTiming } from './misc/timing.decorator';
 import { getCurrentInvoke } from '@codegenie/serverless-express';
 
 @Controller()
 export class AppController {
   private readonly logger = new Logger(AppController.name);
-  constructor(
-    private health: HealthCheckService,
-    private http: HttpHealthIndicator,
-  ) {
-    //
-  }
 
   @Get('logme')
   logMe() {
@@ -48,11 +37,8 @@ export class AppController {
   }
 
   @Get('health')
-  @HealthCheck()
-  @ServerTiming('controller', 'Controller method')
+  @ServerTiming('', 'Controller method')
   check() {
-    return this.health.check([
-      () => this.http.pingCheck('1.1.1.1', 'https://1.1.1.1/'),
-    ]);
+    return 'Ok';
   }
 }

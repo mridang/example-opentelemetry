@@ -24,7 +24,6 @@
 		"@nestjs/core": "^10.0.0",
 		"@nestjs/platform-express": "^10.0.0",
 		"@nestjs/serve-static": "^4.0.1",
-		"@nestjs/terminus": "^10.2.3",
 		"@ntegral/nestjs-sentry": "^4.0.1",
 		"@sentry/hub": "^7.114.0",
 		"@sentry/node": "^7.106.0",

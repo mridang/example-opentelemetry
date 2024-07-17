@@ -91,20 +91,7 @@ describe('app.controller test', () => {
     return request(testModule.app.getHttpServer())
       .get('/health')
       .expect(HttpStatus.OK)
-      .expect({
-        status: 'ok',
-        info: {
-          '1.1.1.1': {
-            status: 'up',
-          },
-        },
-        error: {},
-        details: {
-          '1.1.1.1': {
-            status: 'up',
-          },
-        },
-      });
+      .expect('Ok');
   });
 
   it('/404 (GET)', async () => {
