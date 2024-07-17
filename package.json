@@ -64,7 +64,7 @@
 		"@mridang/serverless-resourcetag-plugin": "^1.1.0",
 		"@mridang/serverless-shortsha-plugin": "^0.1.1",
 		"@nestjs/cli": "^10.3.2",
-		"@nestjs/testing": "^10.3.3",
+		"@nestjs/testing": "^10.3.10",
 		"@serverless/typescript": "^3.38.0",
 		"@tsconfig/node20": "latest",
 		"@types/aws-lambda": "^8.10.133",
