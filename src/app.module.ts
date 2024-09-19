@@ -14,6 +14,7 @@ import { ClsModule } from 'nestjs-cls';
 import { TimingInterceptor } from './timing.interceptor';
 import { ExceptionInterceptor } from './exception.interceptor';
 import { BetterLogger } from './logger';
+import { existsSync } from 'fs';
 
 @Global()
 @Module({
@@ -48,10 +49,28 @@ import { BetterLogger } from './logger';
       },
       inject: ['SECRETS_MANAGER_CLIENT'],
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/static',
-    }),
+    ServeStaticModule.forRoot(
+      ...(existsSync(join(__dirname, 'public'))
+        ? [
+            {
+              rootPath: join(__dirname, 'public'),
+              serveRoot: '/static',
+            },
+          ]
+        : existsSync(join(__dirname, '..', 'public'))
+          ? [
+              {
+                rootPath: join(__dirname, '..', 'public'),
+                serveRoot: '/static',
+              },
+            ]
+          : [
+              {
+                rootPath: join(__dirname, '..', '..', 'public'),
+                serveRoot: '/static',
+              },
+            ]),
+    ),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
