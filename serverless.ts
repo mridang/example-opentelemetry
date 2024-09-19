@@ -194,9 +194,9 @@ const serverlessConfiguration: AWS = {
                   OriginAccessIdentity: '',
                 },
                 OriginAccessControlId: {
-                  'Fn::GetAtt': ['ServeStaticAllowCloudfront', 'Id']
+                  'Fn::GetAtt': ['ServeStaticAllowCloudfront', 'Id'],
                 },
-              }
+              },
             ],
             DefaultCacheBehavior: {
               TargetOriginId: 'LambdaOrigin',
@@ -314,11 +314,9 @@ const serverlessConfiguration: AWS = {
   },
   custom: {
     servestatic: {
-      include: [
-        'public/**/*'
-      ],
+      include: ['public/**/*'],
     },
-  }
+  },
 };
 
 module.exports = serverlessConfiguration;
