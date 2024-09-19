@@ -315,6 +315,7 @@ const serverlessConfiguration: AWS = {
   custom: {
     servestatic: {
       include: ['public/**/*'],
+      public: false,
     },
   },
 };
