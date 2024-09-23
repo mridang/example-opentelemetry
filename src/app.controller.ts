@@ -1,5 +1,4 @@
 import { Controller, Get, Logger } from '@nestjs/common';
-import { ServerTiming } from './misc/timing.decorator';
 import { getCurrentInvoke } from '@codegenie/serverless-express';
 
 @Controller()
@@ -34,11 +33,5 @@ export class AppController {
   @Get('goboom')
   goboom() {
     throw new Error('Oh no!');
-  }
-
-  @Get('health')
-  @ServerTiming('', 'Controller method')
-  check() {
-    return 'Ok';
   }
 }
