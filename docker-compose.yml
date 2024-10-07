@@ -1,15 +1,4 @@
 services:
-    localstack:
-        image: localstack/localstack:3.2
-        ports:
-            - "4566:4566"                                                           # LocalStack main service endpoint
-        environment:
-            - DEBUG=1                                                               # Enable debug mode for detailed logs
-            - DEFAULT_REGION=us-east-1                                              # Default AWS region for LocalStack
-            - EDGE_PORT=4566                                                        # Port for edge service endpoint
-        volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"                           # Docker daemon socket (optional)
-
     jaeger:
         image: jaegertracing/all-in-one:latest
         container_name: jaeger
