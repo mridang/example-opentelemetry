@@ -1,0 +1,36 @@
+receivers:
+    otlp:
+        protocols:
+            grpc:
+            http:
+
+exporters:
+    otlp/jaeger:
+        endpoint: "http://jaeger:4317"
+        tls:
+            insecure: true
+    debug:
+        verbosity: basic
+        sampling_initial: 5
+        sampling_thereafter: 200
+    otlp/elastic:
+        endpoint: "http://host.docker.internal:8200"
+        tls:
+            insecure: true
+
+extensions:
+    health_check:
+        path: "/health"
+
+processors:
+    batch:
+
+service:
+    extensions: [health_check]
+    pipelines:
+        logs:
+            receivers: [otlp]
+            exporters: [debug, otlp/elastic]
+        traces:
+            receivers: [otlp]
+            exporters: [otlp/jaeger, debug, otlp/elastic]
