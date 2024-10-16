@@ -12,7 +12,7 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Request, Response } from '@mridang/nestjs-defaults';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import { ClsService } from 'nestjs-cls';
 
