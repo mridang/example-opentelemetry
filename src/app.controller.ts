@@ -52,6 +52,7 @@ export class AppController {
 
     try {
       const response = await fetch(url);
+      // @ts-expect-error since the types are wrtong
       const headers = [...response.headers.entries()]
         .map(([key, value]) => `${key}: ${value}`)
         .join('\n');
