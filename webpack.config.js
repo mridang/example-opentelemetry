@@ -56,6 +56,7 @@ module.exports = {
     libraryTarget: 'commonjs',
     path: path.resolve(__dirname, '.webpack'),
     filename: '[name].js',
+    devtoolModuleFilenameTemplate: info => info.resourcePath
   },
   externals: [
     /^@aws-sdk\/.*/,
@@ -86,6 +87,7 @@ module.exports = {
     }),
   ],
   optimization: {
+    minimize: false,
     splitChunks: {
       cacheGroups: {
         default: false,
