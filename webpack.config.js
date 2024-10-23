@@ -59,6 +59,8 @@ module.exports = {
     devtoolModuleFilenameTemplate: info => info.resourcePath
   },
   externals: [
+    /^@sentry\/.*/,
+    /^@opentelemetry\/.*/,
     /^@aws-sdk\/.*/,
     /^@smithy\/.*/,
     /^@nestjs\/microservices(\/.*)?$/,
