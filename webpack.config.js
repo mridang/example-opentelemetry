@@ -56,7 +56,7 @@ module.exports = {
     libraryTarget: 'commonjs',
     path: path.resolve(__dirname, '.webpack'),
     filename: '[name].js',
-    devtoolModuleFilenameTemplate: info => info.resourcePath
+    devtoolModuleFilenameTemplate: (info) => info.resourcePath,
   },
   externals: [
     /^@sentry\/.*/,
