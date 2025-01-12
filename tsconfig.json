@@ -19,6 +19,9 @@
   "exclude": [
     "node_modules",
     "**/*.spec.ts",
-    "dist"
+    "dist",
+	  "cypress",
+	  "*.config.js",
+	  "serverless.ts"
   ]
 }
