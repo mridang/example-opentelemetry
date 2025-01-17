@@ -298,9 +298,7 @@ const serverlessConfiguration: AWS = {
       handler: 'src/lambda.handler',
       timeout: 60,
       url: true,
-      layers: [
-        'arn:aws:lambda:us-east-1:188628773952:layer:logcls-layer:1'
-      ]
+      layers: ['arn:aws:lambda:us-east-1:188628773952:layer:logcls-layer:1'],
     },
   },
   custom: {
