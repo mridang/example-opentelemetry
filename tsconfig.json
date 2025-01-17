@@ -21,7 +21,6 @@
     "**/*.spec.ts",
     "dist",
 	  "cypress",
-	  "*.config.js",
-	  "serverless.ts"
+	  "*.config.js"
   ]
 }
