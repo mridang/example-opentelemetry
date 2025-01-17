@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:21 AS builder
+FROM node:20 AS builder
 
 # Set working directory
 WORKDIR /app
@@ -15,7 +15,7 @@ COPY . .
 RUN npx nest build
 
 # Stage 2: Production image
-FROM node:21-slim
+FROM node:20-slim
 
 # Set environment variables
 ENV NODE_ENV=development
