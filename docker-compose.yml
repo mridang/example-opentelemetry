@@ -1,6 +1,6 @@
 services:
     jaeger:
-        image: jaegertracing/all-in-one:latest
+        image: jaegertracing/all-in-one:1.65.0
         container_name: jaeger
         environment:
             - COLLECTOR_ZIPKIN_HOST_PORT=:9411                                      # Enable Zipkin-compatible endpoint on port 9411
@@ -16,7 +16,7 @@ services:
             - "9411:9411"                                                           # HTTP port for Zipkin-compatible traces
 
     collector:
-        image: otel/opentelemetry-collector-contrib:0.102.1
+        image: otel/opentelemetry-collector-contrib:0.117.0
         container_name: otel-collector
         ports:
             - "4317:4317"                                                           # gRPC port for receiving traces from OTLP exporters
