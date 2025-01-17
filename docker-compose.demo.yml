@@ -9,6 +9,7 @@ services:
             - DOMAIN_NAME=localhost
             - SERVICE_ID=demo-service
             - SERVICE_NAME=demo-service
+            - SERVICE_TYPE=app
         depends_on:
             - jaeger
             - collector

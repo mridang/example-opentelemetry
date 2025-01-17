@@ -21,12 +21,6 @@ FROM node:21-slim
 ENV NODE_ENV=development
 ENV SENTRY_DSN=https://public@sentry.example.com/1
 
-  #OLTP_ENDPOINT
-  #      DOMAIN_NAME: fullDomainName,
-  #      SERVICE_ID: packageJson.name,
-  #      SERVICE_NAME: packageJson.name,
-  #      SERVICE_TYPE: 'app',
-
 # Set working directory in the production image
 WORKDIR /app
 
