@@ -9,7 +9,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
   },
   "include": [
     "**/*"
@@ -17,6 +19,8 @@
   "exclude": [
     "node_modules",
     "**/*.spec.ts",
-    "dist"
+    "dist",
+	  "cypress",
+	  "*.config.js"
   ]
 }
