@@ -15,10 +15,6 @@ exporters:
         verbosity: detailed
         sampling_initial: 5
         sampling_thereafter: 200
-    otlp/elastic:
-        endpoint: "http://host.docker.internal:8200"
-        tls:
-            insecure: true
 
 extensions:
     health_check:

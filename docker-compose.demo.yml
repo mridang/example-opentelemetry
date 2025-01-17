@@ -5,8 +5,8 @@ services:
         environment:
             - OLTP_ENDPOINT=http://collector:4317
             - DOMAIN_NAME=localhost
-            - SERVICE_ID=demo-service
-            - SERVICE_NAME=demo-service
+            - SERVICE_ID=demoit
+            - SERVICE_NAME=demoit
             - SERVICE_TYPE=app
         depends_on:
             - jaeger
