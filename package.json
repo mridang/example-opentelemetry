@@ -17,7 +17,6 @@
 		"cypress:run": "cypress run --browser chrome"
 	},
 	"dependencies": {
-		"axios": "1.6.7",
 		"@amplication/opentelemetry-nestjs": "^5.0.3",
 		"@codegenie/serverless-express": "^4.3.0",
 		"@mridang/exporter-xray": "^1.1.0",
@@ -27,15 +26,15 @@
 		"@nestjs/core": "^10.0.0",
 		"@nestjs/platform-express": "^10.0.0",
 		"@nestjs/serve-static": "^4.0.1",
-
 		"@opentelemetry/core": "1.25.1",
 		"@opentelemetry/exporter-logs-otlp-grpc": "^0.52.0",
+		"@opentelemetry/exporter-trace-otlp-grpc": "^0.52.1",
 		"@opentelemetry/id-generator-aws-xray": "^1.2.0",
 		"@opentelemetry/propagator-aws-xray-lambda": "^0.52.0",
-		"@opentelemetry/winston-transport": "^0.4.0",
 		"@opentelemetry/sdk-logs": "^0.52.1",
-		"@opentelemetry/exporter-trace-otlp-grpc": "^0.52.1",
 		"@opentelemetry/sdk-trace-base": "1.25.1",
+		"@opentelemetry/winston-transport": "^0.4.0",
+		"axios": "1.6.7",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.14.1",
 		"nestjs-cls": "^4.3.0",

@@ -1,4 +1,60 @@
-Notes:
+# OpenTelemetry Testbed for NodeJS
+
+This project is an OpenTelemetry for NodeJS. It is designed to be a simple
+application that provides all the necessary endpoint which when invoked
+exercise all the core OpenTelemetry instrumentation.
+
+### Installation
+
+N/A
+
+### Usage
+
+To use the application, run `devbox run demo`. This will start the
+application and the associated services - the Jaeger backend, and, the OpenTelemetry
+collector.
+
+The Jaeger collector is accessible at `http://localhost:16686/` and the
+application at `http://localhost:3000/`.
+
+- Invoke `/captive` to see outbound-requests being instrumented. This endpoint
+  simply makes a HTTP request to an external endpoint.
+- Invoke `/goboom` to see an exception being instrumeted. This endpoint does
+  nothing more than throw an internal-server-error response (500).
+- Invoke `/logme` to see logs being instrumented. This endpoint does nothing
+  more than log message and return all-ok response (200).
+
+Invoking these endpoints will lead to traces being generated and you will be
+able to see them in the Jaeger UI.
+
+## Table of Contents
+
+- [Architecture](#architecture)
+- [Developing](#developing)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Architecture
+
+The app is a NestJS application deployed on AWS Lambda and fronted by
+CloudFront. All SSL certificates are managed automatically via Certificate
+Manager (using DNS validation).
+
+To manage the lock and unlock schedules, EventBridge Scheduler is used
+which in turn invokes the Lambda. All credentials are stored in
+Secrets Manager.
+
+The application uses X-Ray for tracing and Cloudwatch for logging.
+
+The application is designed to be stateless and does not have any sort
+of persistence—this includes all ephemeral persistence, e.g. caches.
+
+## Developing
+
+The app is built with Typescript 5.3 using NestJS and requires
+Node 20 to run.
+
+## Notes:
 
 Even after installing the OTEL libraries, you must explicitly install
 these packages
@@ -53,31 +109,12 @@ Since so many extensions are currently in beta, a production rollout
 of the Otel Collector seems scary as you don't know what will go
 south in production.
 
-```json
-{
-  "traceId": "5dd13a5cdbdc68ad4ae0d19987e62a2d",
-  "parentId": "d9614628c1a9373e",
-  "traceState": undefined,
-  "name": "GET undefined",
-  "id": "2adce4642e15ed8a",
-  "kind": 2,
-  "timestamp": 1718440606727000,
-  "duration": 912998.792,
-  "attributes": {
-    "http.url": "https://jsonplaceholder.typicode.com/posts/1",
-    "http.method": "GET",
-    "http.target": "/posts/1",
-    "net.peer.name": "jsonplaceholder.typicode.com",
-    "http.host": "jsonplaceholder.typicode.com:443",
-    "net.peer.ip": "104.21.59.19",
-    "net.peer.port": 443,
-    "http.status_code": 200,
-    "http.status_text": "OK",
-    "http.flavor": "1.1",
-    "net.transport": "ip_tcp"
-  },
-  "status": { "code": 0 },
-  "events": [],
-  "links": []
-}
-```
+## Contributing
+
+If you have suggestions for how this app could be improved, or
+want to report a bug, open an issue - we'd love all and any
+contributions.
+
+## License
+
+Apache License 2.0 © 2024 Mridang Agarwalla
