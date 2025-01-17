@@ -2,7 +2,9 @@ receivers:
     otlp:
         protocols:
             grpc:
+                endpoint: "0.0.0.0:4317"
             http:
+                endpoint: "0.0.0.0:4318"
 
 exporters:
     otlp/jaeger:
@@ -10,7 +12,7 @@ exporters:
         tls:
             insecure: true
     debug:
-        verbosity: basic
+        verbosity: detailed
         sampling_initial: 5
         sampling_thereafter: 200
     otlp/elastic:
