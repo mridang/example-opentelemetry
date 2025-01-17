@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+    demo:
+        build: .
+        container_name: demo-service
+        environment:
+            - OLTP_ENDPOINT=http://collector:4317
+            - DOMAIN_NAME=localhost
+            - SERVICE_ID=demo-service
+            - SERVICE_NAME=demo-service
+        depends_on:
+            - jaeger
+            - collector
+        ports:
+            - "3000:3000"
