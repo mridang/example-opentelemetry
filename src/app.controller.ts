@@ -1,16 +1,19 @@
 import { Controller, Get, Logger } from '@nestjs/common';
 import { getCurrentInvoke } from '@codegenie/serverless-express';
+import axios from 'axios';
 
 @Controller()
 export class AppController {
   private readonly logger = new Logger(AppController.name);
 
+  @Get('ctx')
+  ctx() {
+    return JSON.stringify(getCurrentInvoke());
+  }
+
   @Get('logme')
   logMe() {
     this.logger.log('this is a test message');
-    this.logger.log('this is a test message', 'foo');
-    this.logger.log('this is a test message', 'foo', { baz: 'bar' });
-    return 'ok';
   }
 
   @Get('goboom')
@@ -23,15 +26,24 @@ export class AppController {
     }
   }
 
-  @Get('debug')
-  debug() {
-    return {
-      ...getCurrentInvoke(),
-    };
+  @Get('axios')
+  async axios() {
+    const response = await axios.get(
+      'https://jsonplaceholder.typicode.com/posts/1',
+    );
+    return response.data;
   }
 
-  @Get('goboom')
-  goboom() {
+  @Get('fetch')
+  async fetch() {
+    const response = await fetch(
+      'https://jsonplaceholder.typicode.com/todos/1',
+    );
+    return await response.json();
+  }
+
+  @Get('crash')
+  crash() {
     throw new Error('Oh no!');
   }
 

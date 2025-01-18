@@ -1,4 +1,14 @@
 {
-  "$schema":  "https://raw.githubusercontent.com/jetpack-io/devbox/0.10.3/.schema/devbox.schema.json",
-  "packages": ["nodejs@20"]
+	"$schema": "https://raw.githubusercontent.com/jetpack-io/devbox/0.10.3/.schema/devbox.schema.json",
+	"packages": [
+		"nodejs@20"
+	],
+	"shell": {
+		"init_hook": [
+			"export $(xargs < .env)"
+		],
+		"scripts": {
+			"demo": "docker compose --file=docker-compose.yml --file=docker-compose.demo.yml up --build"
+		}
+	}
 }

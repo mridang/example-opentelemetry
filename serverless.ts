@@ -35,7 +35,7 @@ const serverlessConfiguration: AWS = {
       'sls:meta:environment': '${opt:stage, "dev"}',
     },
     environment: {
-      NODE_OPTIONS: '--enable-source-maps',
+      NODE_OPTIONS: '--require=./src/otel --enable-source-maps',
       ACCOUNT_ID: '${aws:accountId}',
       NODE_ENV: '${self:provider.stage}',
       DOMAIN_NAME: fullDomainName,
