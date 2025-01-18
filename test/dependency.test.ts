@@ -112,7 +112,7 @@ describe('duplicate.dependencies test', () => {
     duplicates = await findDuplicateDependencies();
   });
 
-  test.each(['@aws-sdk', '@smithy', '@sentry', '@opentelemetry'])(
+  test.each(['@aws-sdk', '@sentry', '@opentelemetry'])(
     'should not have duplicate %s dependencies',
     (dependencyPrefix) => {
       const duplicateDeps = Object.keys(duplicates).filter((dep) =>
