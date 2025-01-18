@@ -27,6 +27,24 @@ application at `http://localhost:3000/`.
 Invoking these endpoints will lead to traces being generated and you will be
 able to see them in the Jaeger UI.
 
+##### Using Elasticsearch
+
+If you would like to send traces from your
+
+https://github.com/elastic/observability-docs/blob/b8f4f2327ed3bbfe3965c9cffa974e268a853616/docs/en/serverless/apm/collect-application-data/open-telemetry/otel-direct.asciidoc#send-data-from-an-upstream-opentelemetry-collector
+
+```
+  otlp/elastic:
+    # Elastic APM server https endpoint (without the "https://" prefix)
+    endpoint: "${env:ELASTIC_APM_SERVER_ENDPOINT}"
+    tls:
+        # Must be enabled if using self-signed certificates
+		insecure: false
+    headers:
+      # Elastic APM Server secret token (base64 decoded)
+      Authorization: "Bearer ${env:ELASTIC_APM_SECRET_TOKEN}"
+```
+
 ## Table of Contents
 
 - [Architecture](#architecture)

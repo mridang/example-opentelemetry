@@ -15,6 +15,10 @@ exporters:
         verbosity: detailed
         sampling_initial: 5
         sampling_thereafter: 200
+    otlp/elastic:
+        endpoint: "https://apm.taile3c3b.ts.net:443"
+        headers:
+            Authorization: "Bearer C576O4w94j2B2YGOWw9HdtO8"
 
 extensions:
     health_check:
