@@ -12,6 +12,15 @@ import {
 } from '@opentelemetry/core';
 import { AWSXRayLambdaPropagator } from '@opentelemetry/propagator-aws-xray-lambda';
 
+const oltpConfig = {
+  url: ((url) => url?.split('?')[0])(process.env.OLTP_ENDPOINT),
+  headers: ((url) => {
+    const query = new URL(url ?? '').search;
+    const token = new URLSearchParams(query).get('access_token');
+    return token ? { Authorization: `Bearer ${token}` } : undefined;
+  })(process.env.OLTP_ENDPOINT ?? ''),
+};
+
 Tracing.init({
   serviceName: process.env.SERVICE_NAME || 'unknown',
   idGenerator: new AWSXRayIdGenerator(),
@@ -22,16 +31,12 @@ Tracing.init({
       new AWSXRayLambdaPropagator(),
     ],
   }),
-  logRecordProcessor: process.env.OLTP_ENDPOINT
-    ? new BatchLogRecordProcessor(
-        new OTLPLogExporter({ url: process.env.OLTP_ENDPOINT }),
-      )
-    : undefined,
+  logRecordProcessors: process.env.OLTP_ENDPOINT
+    ? [new BatchLogRecordProcessor(new OTLPLogExporter(oltpConfig))]
+    : [],
   spanProcessors: [
     process.env.OLTP_ENDPOINT
-      ? new SimpleSpanProcessor(
-          new OTLPTraceExporter({ url: process.env.OLTP_ENDPOINT }),
-        )
+      ? new SimpleSpanProcessor(new OTLPTraceExporter(oltpConfig))
       : new SimpleSpanProcessor(new XraySpanExporter()),
   ],
 });
