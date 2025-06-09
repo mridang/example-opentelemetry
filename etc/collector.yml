@@ -1,38 +1,38 @@
 receivers:
-    otlp:
-        protocols:
-            grpc:
-                endpoint: "0.0.0.0:4317"
-            http:
-                endpoint: "0.0.0.0:4318"
+  otlp:
+    protocols:
+      grpc:
+        endpoint: '0.0.0.0:4317'
+      http:
+        endpoint: '0.0.0.0:4318'
 
 exporters:
-    otlp/jaeger:
-        endpoint: "http://jaeger:4317"
-        tls:
-            insecure: true
-    debug:
-        verbosity: detailed
-        sampling_initial: 5
-        sampling_thereafter: 200
-    otlp/elastic:
-        endpoint: "https://apm.taile3c3b.ts.net:443"
-        headers:
-            Authorization: "Bearer C576O4w94j2B2YGOWw9HdtO8"
+  otlp/jaeger:
+    endpoint: 'http://jaeger:4317'
+    tls:
+      insecure: true
+  debug:
+    verbosity: detailed
+    sampling_initial: 5
+    sampling_thereafter: 200
+  otlp/elastic:
+    endpoint: 'https://apm.taile3c3b.ts.net:443'
+    headers:
+      Authorization: 'Bearer C576O4w94j2B2YGOWw9HdtO8'
 
 extensions:
-    health_check:
-        path: "/health"
+  health_check:
+    path: '/health'
 
 processors:
-    batch:
+  batch:
 
 service:
-    extensions: [health_check]
-    pipelines:
-        logs:
-            receivers: [otlp]
-            exporters: [debug, otlp/elastic]
-        traces:
-            receivers: [otlp]
-            exporters: [otlp/jaeger, debug, otlp/elastic]
+  extensions: [health_check]
+  pipelines:
+    logs:
+      receivers: [otlp]
+      exporters: [debug, otlp/elastic]
+    traces:
+      receivers: [otlp]
+      exporters: [otlp/jaeger, debug, otlp/elastic]

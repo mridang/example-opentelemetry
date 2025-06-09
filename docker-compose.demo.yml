@@ -1,42 +1,42 @@
 services:
-    demo:
-        build: .
-        container_name: demo-service
-        environment:
-            - OLTP_ENDPOINT=http://collector:4317
-            - DOMAIN_NAME=localhost
-            - SERVICE_ID=demoit
-            - SERVICE_NAME=demoit
-            - SERVICE_TYPE=app
-        depends_on:
-            - jaeger
-            - collector
-        ports:
-            - "3000:3000"
+  demo:
+    build: .
+    container_name: demo-service
+    environment:
+      - OLTP_ENDPOINT=http://collector:4317
+      - DOMAIN_NAME=localhost
+      - SERVICE_ID=demoit
+      - SERVICE_NAME=demoit
+      - SERVICE_TYPE=app
+    depends_on:
+      - jaeger
+      - collector
+    ports:
+      - '3000:3000'
 
-    jaeger:
-        image: jaegertracing/all-in-one:1.65.0
-        container_name: jaeger
-        environment:
-            - COLLECTOR_ZIPKIN_HOST_PORT=:9411                                      # Enable Zipkin-compatible endpoint on port 9411
-            - COLLECTOR_OTLP_ENABLED=true                                           # Enable OTLP endpoint for receiving telemetry
-        ports:
-            - "6831:6831/udp"                                                       # UDP port for receiving traces using the Jaeger Thrift compact protocol
-            - "6832:6832/udp"                                                       # UDP port for receiving traces using the Jaeger Thrift binary protocol
-            - "5778:5778"                                                           # HTTP port for querying sampling strategy
-            - "16686:16686"                                                         # HTTP port for Jaeger UI
-            - "14250:14250"                                                         # gRPC port for Jaeger collector
-            - "14268:14268"                                                         # HTTP port for Jaeger collector
-            - "14269:14269"                                                         # HTTP port for Jaeger collector admin endpoint
-            - "9411:9411"                                                           # HTTP port for Zipkin-compatible traces
+  jaeger:
+    image: jaegertracing/all-in-one:1.65.0
+    container_name: jaeger
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411 # Enable Zipkin-compatible endpoint on port 9411
+      - COLLECTOR_OTLP_ENABLED=true # Enable OTLP endpoint for receiving telemetry
+    ports:
+      - '6831:6831/udp' # UDP port for receiving traces using the Jaeger Thrift compact protocol
+      - '6832:6832/udp' # UDP port for receiving traces using the Jaeger Thrift binary protocol
+      - '5778:5778' # HTTP port for querying sampling strategy
+      - '16686:16686' # HTTP port for Jaeger UI
+      - '14250:14250' # gRPC port for Jaeger collector
+      - '14268:14268' # HTTP port for Jaeger collector
+      - '14269:14269' # HTTP port for Jaeger collector admin endpoint
+      - '9411:9411' # HTTP port for Zipkin-compatible traces
 
-    collector:
-        image: otel/opentelemetry-collector-contrib:0.117.0
-        container_name: otel-collector
-        ports:
-            - "4317:4317"                                                           # gRPC port for receiving traces from OTLP exporters
-            - "4318:4318"                                                           # HTTP port for receiving traces from OTLP exporters
-            - "13133:13133"
-        volumes:
-            - ./etc/collector.yml:/etc/otel/config.yml                              # Volume mount for custom OpenTelemetry Collector configuration
-        command: ["--config=/etc/otel/config.yml"]                                  # Command to run the OpenTelemetry Collector with the specified configuration
+  collector:
+    image: otel/opentelemetry-collector-contrib:0.117.0
+    container_name: otel-collector
+    ports:
+      - '4317:4317' # gRPC port for receiving traces from OTLP exporters
+      - '4318:4318' # HTTP port for receiving traces from OTLP exporters
+      - '13133:13133'
+    volumes:
+      - ./etc/collector.yml:/etc/otel/config.yml # Volume mount for custom OpenTelemetry Collector configuration
+    command: ['--config=/etc/otel/config.yml'] # Command to run the OpenTelemetry Collector with the specified configuration
