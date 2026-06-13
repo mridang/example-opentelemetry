@@ -1,5 +1,5 @@
-import { End2EndModule } from './e2e.module';
-import { AppModule } from '../src/app.module';
+import { End2EndModule } from './e2e.module.js';
+import { AppModule } from '../src/app.module.js';
 import request from 'supertest';
 import {
   Body,
@@ -11,7 +11,7 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { Request, Response } from '@mridang/nestjs-defaults';
+import type { Request, Response } from '@mridang/nestjs-defaults';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import { ClsService } from 'nestjs-cls';
 

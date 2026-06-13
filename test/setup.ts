@@ -1,10 +1,14 @@
-import path from 'path';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import {
   DockerComposeEnvironment,
   StartedDockerComposeEnvironment,
 } from 'testcontainers';
 import { config } from 'dotenv';
-import findFreePorts from 'find-free-ports';
+import { findFreePorts } from 'find-free-ports';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 declare global {
   // noinspection ES6ConvertVarToLetConst
