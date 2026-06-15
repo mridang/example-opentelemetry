@@ -1,8 +1,9 @@
 import { Global, Module } from '@nestjs/common';
-import { secretName } from './constants';
+import { secretName } from './constants.js';
 import { OpenTelemetryModule } from '@amplication/opentelemetry-nestjs';
-import { DefaultsModule } from '@mridang/nestjs-defaults';
-import { AppController } from './app.controller';
+import nestjsDefaults from '@mridang/nestjs-defaults';
+const { DefaultsModule } = nestjsDefaults;
+import { AppController } from './app.controller.js';
 
 @Global()
 @Module({

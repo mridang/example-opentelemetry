@@ -1,7 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 import { AwsLambdaRuntime } from '@serverless/typescript';
-import packageJson from './package.json';
-import { secretName } from './src/constants';
+import packageJson from './package.json' with { type: 'json' };
+import { secretName } from './src/constants.js';
 
 const parentDomain = process.env.PARENT_DOMAIN;
 const hostedZoneId = process.env.HOSTED_ZONE_ID;
@@ -303,7 +303,7 @@ const serverlessConfiguration: AWS = {
   },
   custom: {
     webpack: {
-      webpackConfig: 'webpack.config.js',
+      webpackConfig: 'webpack.config.mjs',
     },
     servestatic: {
       include: ['public/**/*'],
